@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  app:
+    build: .
+
+    ports:
+      - '3000:3000'
+
+    volumes:
+      - ./src/:/home/usr/app/
+
+    environment:
+      # For JavaScript, CHOKIDAR_USEPOLLING=true can be used
+      # When using TypeScript,
+      - WATCHPACK_POLLING=true
+
+    command: sh -c "npm run dev"
+
+    # Avoids normal termination of container
+    tty: true
