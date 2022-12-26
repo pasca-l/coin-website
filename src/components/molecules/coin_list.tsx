@@ -1,3 +1,5 @@
+import { Card, CardHeader, CardBody, CardFooter, Text } from "@chakra-ui/react";
+
 type CoinType = {
   id: number;
   name: string;
@@ -16,9 +18,11 @@ export const CoinList = () => {
     <>
       {coins.map(({ id, name }: CoinType) => {
         return (
-          <div key={id} className="coin_card">
-            {name}
-          </div>
+          <Card key={id}>
+            <CardBody>
+              <Text>{name}</Text>
+            </CardBody>
+          </Card>
         );
       })}
     </>
