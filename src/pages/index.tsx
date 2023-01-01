@@ -1,12 +1,11 @@
-import { CoinList } from "../components/molecules/coin_list";
+import { Home } from "../components/templates/home";
 
-const Home = () => {
+const App = () => {
   return (
     <>
-      <h1>Hello World!</h1>
-      <CoinList />
+      <Home />
     </>
   );
 };
 
-export default Home;
+export default App;
