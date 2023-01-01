@@ -5,7 +5,10 @@ services:
     build: ./dockerfiles/nodejs/
 
     ports:
+      # For next.js app
       - '3000:3000'
+      # For Prisma studio
+      - '5555:5555'
 
     volumes:
       - ./src/:/home/usr/app/
@@ -19,3 +22,25 @@ services:
 
     # Avoids normal termination of container
     tty: true
+
+    depends_on:
+      - db
+
+    networks:
+      - webapp
+
+  db:
+    build: ./dockerfiles/postgresql/
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    env_file:
+      - ./src/.env
+    networks:
+      - webapp
+
+networks:
+  webapp:
+    # Use of default driver (bridge)
+    driver: bridge
