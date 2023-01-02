@@ -3,7 +3,7 @@ import json
 
 class Formatter:
     def __init__(self):
-        self.data_path = '../src/public/coin_data.json'
+        self.data_path = '../src/prisma/coin_data.json'
         self.json_data = json.load(open(self.data_path, 'r'))
 
     def add_item(self, add_dict):
@@ -23,14 +23,14 @@ class Formatter:
     def generate_js(self, var):
         js_content = f"export const {var} = {self.json_data['coins']};"
 
-        with open(self.data_path.replace(".json", ".jsx"), 'w') as f:
+        with open(self.data_path.replace(".json", ".ts"), 'w') as f:
             f.write(js_content)
 
 
 def main():
     formatter = Formatter()
     formatter.add_item({'isCollected': 0})
-    formatter.generate_js('coin_data')
+    formatter.generate_js('COIN_DATA')
 
 
 if __name__ == '__main__':
