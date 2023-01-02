@@ -12,9 +12,9 @@ datasource db {
 
 model Coin {
   uid String @id
-  url String
-  year String
-  country String
   name String
+  year Int
+  country String
+  url String
   isCollected Boolean
 }

@@ -1,9 +1,10 @@
 import { prisma } from "../lib/prisma";
-import { COIN_DATA } from "./coin_data";
+import COIN_DATA from "./coin_data.json";
 
-const data = COIN_DATA.map(({ isCollected, ...rest }) => ({
+const data = COIN_DATA["coins"].map(({ year, isCollected, ...other }) => ({
+  year: +year,
   isCollected: !!isCollected,
-  ...rest,
+  ...other,
 }));
 
 async function main() {
