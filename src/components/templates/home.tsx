@@ -1,11 +1,10 @@
 import { CoinList } from "../molecules/coin_list";
 
-export const Home = () => {
+export const Home = ({ coin_data }) => {
   return (
     <>
       <header>Coin Website!!!!</header>
-      <h1>Hello World!</h1>
-      <CoinList />
+      <CoinList coin_data={coin_data} />
     </>
   );
 };

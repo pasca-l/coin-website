@@ -11,8 +11,6 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 
-import { coin_data } from "../../public/coin_data";
-
 type CoinType = {
   uid: string;
   url: string;
@@ -22,12 +20,13 @@ type CoinType = {
   isCollected: number;
 };
 
-// type Props = CoinType[];
+type Props = CoinType[];
 
-export const CoinList = () => {
+export const CoinList = ({ coin_data }) => {
+  console.log(coin_data);
   return (
-    <SimpleGrid minChildWidth="320px" spacing="20px">
-      {coin_data.map(({ uid, name, isCollected }: CoinType) => {
+    <SimpleGrid minChildWidth="500px" spacing="20px">
+      {coin_data.data.map(({ uid, name, isCollected }) => {
         return (
           <Card key={uid}>
             <CardBody>
@@ -40,7 +39,7 @@ export const CoinList = () => {
                   src={"/images/" + uid + ".jpg"}
                   width={150}
                   height={150}
-                  alt={name}
+                  alt={"Image for: " + name}
                 />
                 <Stack direction={"column"} spacing="20px">
                   <Text>{name}</Text>
@@ -58,7 +57,3 @@ export const CoinList = () => {
     </SimpleGrid>
   );
 };
-
-export async function getStaticProps() {
-  return { propos: { coin_data } };
-}
