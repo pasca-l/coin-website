@@ -34,11 +34,22 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./db/:/var/lib/postgresql/data/
     env_file:
       - ./src/.env
     networks:
       - webapp
+
+  cv:
+    build: ./dockerfiles/fastapi/
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./cv/:/home/usr/app/
+    tty: true
+    networks:
+      - webapp
+    # command: sh -c ""
 
 networks:
   webapp:
