@@ -21,6 +21,7 @@ export const CameraSearch = () => {
   useEffect(() => {
     const postData = async () => {
       await fetch("/api/hello", {
+        // method: "GET",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,12 +29,10 @@ export const CameraSearch = () => {
         body: JSON.stringify({ name: "John" }),
       });
     };
-    console.log(postData());
+    // console.log(postData());
 
     postData();
   }, []);
-
-  console.log(url);
 
   return (
     <>
@@ -70,7 +69,7 @@ export const CameraSearch = () => {
             </button>
           </div>
           <div>
-            <Image width={200} height={200} src={url} alt="Screenshot" />
+            <Image width={720} height={360} src={url} alt="Screenshot" />
           </div>
         </>
       ) : (

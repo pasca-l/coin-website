@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    build: ./dockerfiles/nodejs/
+    build: ./containers/nodejs/
 
     ports:
       # For next.js app
@@ -11,7 +11,7 @@ services:
       - '5555:5555'
 
     volumes:
-      - ./src/:/home/usr/app/
+      - ./containers/nodejs/src/:/home/usr/app/
 
     environment:
       # For JavaScript, CHOKIDAR_USEPOLLING=true can be used
@@ -25,31 +25,33 @@ services:
 
     depends_on:
       - db
+      # - api
 
     networks:
       - webapp
 
   db:
-    build: ./dockerfiles/postgresql/
+    build: ./containers/postgresql/
     ports:
       - '5432:5432'
     volumes:
-      - ./db/:/var/lib/postgresql/data/
+      - ./containers/postgresql/db/:/var/lib/postgresql/data/
     env_file:
-      - ./src/.env
+      - ./containers/nodejs/src/.env
     networks:
       - webapp
 
-  cv:
-    build: ./dockerfiles/fastapi/
+  api:
+    build: ./containers/fastapi/
     ports:
       - '8080:8080'
     volumes:
-      - ./cv/:/home/usr/app/
+      - ./containers/fastapi/cv/:/home/usr/app/
     tty: true
     networks:
       - webapp
-    # command: sh -c ""
+    command: >
+      sh -c "poetry run python server.py"
 
 networks:
   webapp:
