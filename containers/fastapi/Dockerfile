@@ -1,3 +1,4 @@
+# alpine takes too much time to build libraries such as "numpy"
 FROM python:3.10.9-bullseye
 
 ENV HOME /home/usr
