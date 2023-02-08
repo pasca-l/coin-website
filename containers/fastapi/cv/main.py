@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 async def hello():
-    return {"message": "Hello World! From FastAPI!"}
+    return [{"message": "Hello World! From FastAPI!!!"}]
 
 
 @app.get("/img")
