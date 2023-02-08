@@ -18,21 +18,20 @@ export const CameraSearch = () => {
     }
   }, [webcamRef]);
 
-  useEffect(() => {
-    const postData = async () => {
-      await fetch("/api/hello", {
-        // method: "GET",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: "John" }),
-      });
-    };
-    // console.log(postData());
+  // useEffect(() => {
+  //   const postData = async () => {
+  //     await fetch("/api/test_fastapi", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ name: "John" }),
+  //     });
+  //   };
+  //   console.log(postData());
 
-    postData();
-  }, []);
+  //   postData();
+  // }, []);
 
   return (
     <>
@@ -57,6 +56,7 @@ export const CameraSearch = () => {
       ) : (
         <button onClick={() => setCaptureEnabled(true)}>Start</button>
       )}
+
       {url ? (
         <>
           <div>
