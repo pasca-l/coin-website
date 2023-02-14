@@ -15,6 +15,17 @@ export const CameraSearch = () => {
     const image = webcamRef.current?.getScreenshot();
     if (image) {
       setUrl(image);
+
+      const post = async () => {
+        await fetch("http://api:8080/img", {
+          method: "POST",
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
+          body: JSON.stringify({ name: image }),
+        });
+      };
+      post();
     }
   }, [webcamRef]);
 
@@ -39,7 +50,9 @@ export const CameraSearch = () => {
       {isCaptureEnabled ? (
         <>
           <div>
-            <button onClick={() => setCaptureEnabled(false)}>End</button>
+            <button type="button" onClick={() => setCaptureEnabled(false)}>
+              End
+            </button>
           </div>
           <div>
             <Webcam
