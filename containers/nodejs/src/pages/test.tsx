@@ -2,17 +2,47 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:8080";
+
 type Props = {
   data: string;
 };
 
 const Testing = ({ data }: Props) => {
-  const res = async () => {
-    await axios.post("http://api:8080/img", {
-      message: "test!",
+  const res = () => {
+    axios.get("/").then((test) => {
+      console.log(test);
     });
   };
-  console.log(res.data);
+  res();
+
+  // const res = async () => {
+  //   await axios
+  //     .post("/img", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       data: "Data sent from Next.js!!!!",
+  //     })
+  //     .then((test) => {
+  //       console.log(test);
+  //     });
+  // };
+  // res();
+
+  // const post = async () => {
+  //   const response = await fetch("http://localhost:8080/img", {
+  //     method: "POST",
+  //     body: JSON.stringify({ data: "test!!!!!" }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
+  //   return data;
+  // };
+  // post();
 
   return (
     <>
@@ -30,20 +60,6 @@ const Testing = ({ data }: Props) => {
     </>
   );
 };
-
-// const post = async () => {
-//   console.log("pressed");
-
-//   const response = await fetch("http://api:8080/img", {
-//     method: "POST",
-//     body: JSON.stringify({ name: "test!!!!!" }),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   const data = await response.json();
-//   return data;
-// };
 
 // export async function getStaticProps() {
 //   const res = await fetch("http://api:8080/img");
