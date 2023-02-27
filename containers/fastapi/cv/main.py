@@ -1,23 +1,33 @@
 import base64
-from fastapi import FastAPI
 import numpy as np
 import cv2
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+
+class Data(BaseModel):
+    data: str
 
 
 @app.get("/")
 async def hello():
-    return [{"message": "Hello World! From FastAPI!!!"}]
+    return {"message": "Hello World! From FastAPI!!!"}
 
 
 @app.post("/img")
-async def process(data):
-    with open("test.txt", 'w') as f:
-        f.write(f"{data}")
-
-    return {data: "POST success!!!"}
+async def process(data: Data):
+    return {"data": "POST success!!!"}
 
     img_base64 = data.split(',')[-1]
 
