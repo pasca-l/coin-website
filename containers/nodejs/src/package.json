@@ -20,6 +20,7 @@
     "eslint-config-next": "^12.0.4",
     "framer-motion": "^6.5.1",
     "next": "13.0.7",
+    "next-auth": "^4.22.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-webcam": "^7.0.1"

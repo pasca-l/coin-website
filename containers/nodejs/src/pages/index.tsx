@@ -1,12 +1,13 @@
+import { useSession } from "next-auth/react";
+
 import { Home } from "../components/templates/home";
+import { Login } from "../components/templates/auth";
 import { prisma } from "../lib/prisma";
 
 const App = ({ ...props }) => {
-  return (
-    <>
-      <Home coin_data={props} />
-    </>
-  );
+  const { data: session } = useSession();
+
+  return <>{session ? <Home coin_data={props} /> : <Login />}</>;
 };
 
 export default App;
