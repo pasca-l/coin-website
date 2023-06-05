@@ -6,7 +6,7 @@ ENV PATH /home/usr/.local/bin:$PATH
 
 WORKDIR /home/usr/app
 
-RUN apt-get update && apt-get upgrade \
+RUN apt-get update && apt-get upgrade -y \
     # dependency for opencv-python
     && apt-get install -y libgl1-mesa-dev
 

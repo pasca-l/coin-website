@@ -1,3 +1,4 @@
+from fastapi import APIRouter
 import os
 import shutil
 import uuid
@@ -8,7 +9,15 @@ import requests
 import bs4
 
 
+router = APIRouter(
+    prefix="/utils",
+)
+
+
+@router.get("/coindata")
 def main():
+    return
+
     image_dir = '../src/public/images/'
     shutil.rmtree(image_dir)
     os.makedirs(image_dir, exist_ok=True)
@@ -51,7 +60,3 @@ def main():
     save_path = '../src/public/coin_data.json'
     with open(save_path, 'w', encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False)
-
-
-if __name__ == '__main__':
-    main()

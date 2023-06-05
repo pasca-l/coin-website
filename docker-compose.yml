@@ -46,7 +46,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./containers/fastapi/cv/:/home/usr/app/
+      - ./containers/fastapi/src/:/home/usr/app/
     tty: true
     networks:
       - webapp

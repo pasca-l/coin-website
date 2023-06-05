@@ -1,18 +1,12 @@
+from fastapi import APIRouter
+from pydantic import BaseModel
 import base64
 import numpy as np
 import cv2
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
 
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["GET", "POST"],
-    allow_headers=["*"],
+router = APIRouter(
+    prefix="/img",
 )
 
 
@@ -20,14 +14,9 @@ class Data(BaseModel):
     data: str
 
 
-@app.get("/")
-async def hello():
-    return {"message": "Hello World! From FastAPI!!!"}
-
-
-@app.post("/img")
+@router.post("/")
 async def process(data: Data):
-    return {"data": "POST success!!!"}
+    return {"data": "POST success!!!!"}
 
     img_base64 = data.split(',')[-1]
 
