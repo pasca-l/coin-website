@@ -12,8 +12,8 @@ services:
 
     volumes:
       - ./containers/nodejs/src/:/home/usr/app/
-      # To apply npm packages installed inside docker image
-      - ./containers/nodejs/src/node_modules/:/home/usr/app/node_modules/
+      # Preferentially apply from docker image
+      - node_modules:/home/usr/app/node_modules/
 
     environment:
       # For JavaScript, CHOKIDAR_USEPOLLING=true can be used
@@ -58,3 +58,7 @@ networks:
   webapp:
     # Use of default driver (bridge)
     driver: bridge
+
+# Volumes are applied after bind mount
+volumes:
+  node_modules:
