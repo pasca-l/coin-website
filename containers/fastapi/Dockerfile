@@ -10,8 +10,8 @@ RUN apt-get update && apt-get upgrade -y \
     # dependency for opencv-python
     && apt-get install -y libgl1-mesa-dev
 
-COPY ./cv/pyproject.toml /home/usr/app/
-COPY ./cv/poetry.lock /home/usr/app/
+COPY ./src/pyproject.toml /home/usr/app/
+COPY ./src/poetry.lock /home/usr/app/
 RUN apt install -y curl \
     && curl -sSL https://install.python-poetry.org | python3 - \
     && poetry install
