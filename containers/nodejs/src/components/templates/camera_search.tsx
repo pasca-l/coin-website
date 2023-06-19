@@ -17,7 +17,7 @@ export const CameraSearch = () => {
       setUrl(image);
 
       const post = async () => {
-        await fetch("http://api:8080/img", {
+        await fetch("http://api:8080/img/circles", {
           method: "POST",
           // headers: {
           //   "Content-Type": "application/json",

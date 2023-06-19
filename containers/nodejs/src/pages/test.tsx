@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
-import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8080";
 
@@ -9,12 +8,27 @@ type Props = {
 };
 
 const Testing = ({ data }: Props) => {
-  const res = () => {
-    axios.get("/").then((test) => {
-      console.log(test);
+  // const res = () => {
+  //   axios.get("/").then((test) => {
+  //     console.log(test);
+  //   });
+  // };
+  // res();
+
+  const post = async () => {
+    await fetch("http://localhost:8080/img/circles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data: test_img }),
+    }).then((data) => {
+      console.log(data.body);
     });
   };
-  res();
+  post();
+
+  // "/img/circles"
 
   // const res = async () => {
   //   await axios
