@@ -6,5 +6,4 @@ WORKDIR /home/usr/app
 
 COPY ./src/package.json /home/usr/app/
 
-RUN apk update && apk upgrade \
-    && npm install
+RUN apk update && apk upgrade

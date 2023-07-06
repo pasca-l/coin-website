@@ -12,15 +12,22 @@ services:
 
     volumes:
       - ./containers/nodejs/src/:/home/usr/app/
-      # Preferentially apply from docker image
-      - node_modules:/home/usr/app/node_modules/
 
     environment:
       # For JavaScript, CHOKIDAR_USEPOLLING=true can be used
       # When using TypeScript,
       - WATCHPACK_POLLING=true
 
-    command: sh -c "npm run dev"
+    # If running "npm install" inside Dockerfile, due to bind mount,
+    # local node_modules (empty) is overriden after image build
+    # As volumes are applied after bind mount, using named or anonymous volume,
+    # node_modules created during image build will be set
+    command: >
+      sh -c "
+        npm install &&
+        npx prisma db pull && npx prisma generate &&
+        npm run dev
+      "
 
     # Avoids normal termination of container
     tty: true
@@ -58,7 +65,3 @@ networks:
   webapp:
     # Use of default driver (bridge)
     driver: bridge
-
-# Volumes are applied after bind mount
-volumes:
-  node_modules:
