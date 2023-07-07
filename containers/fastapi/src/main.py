@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from cv import img_process
-from utils import coindata_collect
+from cv import process
+from utils import data
 
 
 app = FastAPI()
@@ -14,8 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(img_process.router)
-app.include_router(coindata_collect.router)
+app.include_router(process.router)
+app.include_router(data.router)
 
 
 @app.get("/")
