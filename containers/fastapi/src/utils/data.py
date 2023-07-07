@@ -9,7 +9,7 @@ router = APIRouter(
 
 
 @router.get("/coindata")
-def main():
+def fetch_coindata():
     coindata = CoinData()
     # coindata.add_item({'isCollected': 0})
     return coindata.return_jsondata()
