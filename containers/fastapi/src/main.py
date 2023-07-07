@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from cv import process
+from cv import image
 from utils import data
 
 
@@ -14,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(process.router)
+app.include_router(image.router)
 app.include_router(data.router)
 
 
