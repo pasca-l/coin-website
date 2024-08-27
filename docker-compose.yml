@@ -18,6 +18,12 @@ services:
       # When using TypeScript,
       - WATCHPACK_POLLING=true
 
+    # Avoids normal termination of container
+    tty: true
+
+    networks:
+      - appnetwork
+
     # If running "npm install" inside Dockerfile, due to bind mount,
     # local node_modules (empty) is overriden after image build
     # As volumes are applied after bind mount, using named or anonymous volume,
@@ -25,30 +31,9 @@ services:
     command: >
       sh -c "
         npm install &&
-        npx prisma db pull && npx prisma generate &&
+        npx prisma generate &&
         npm run dev
       "
-
-    # Avoids normal termination of container
-    tty: true
-
-    depends_on:
-      - db
-      # - api
-
-    networks:
-      - webapp
-
-  db:
-    build: ./app/db/
-    expose:
-      - "5432"
-    volumes:
-      - ./app/db/db/:/var/lib/db/data/
-    env_file:
-      - ./app/front/src/.env
-    networks:
-      - webapp
 
   api:
     build: ./app/api/
@@ -58,10 +43,10 @@ services:
       - ./app/api/src/:/home/usr/app/
     tty: true
     networks:
-      - webapp
+      - appnetwork
     command: sh -c "poetry run python server.py"
 
 networks:
-  webapp:
+  appnetwork:
     # Use of default driver (bridge)
     driver: bridge

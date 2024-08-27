@@ -3,15 +3,43 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  uid       String   @id @default(uuid())
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  records Record[]
+
+  @@map("users")
 }
 
 model Coin {
-  uid         String  @id
-  url         String
-  year        Int
-  country     String
-  name        String
-  isCollected Boolean
+  uid     String @id @default(uuid())
+  name    String
+  country String
+  year    Int
+  image   Bytes
+
+  records Record[]
+
+  @@map("coins")
+}
+
+model Record {
+  userUid     String
+  coinUid     String
+  isCollected Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userUid], references: [uid])
+  coin Coin @relation(fields: [coinUid], references: [uid])
+
+  @@id([userUid, coinUid])
+  @@map("records")
 }
