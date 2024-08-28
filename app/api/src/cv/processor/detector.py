@@ -1,31 +1,25 @@
 import base64
-import numpy as np
+
 import cv2
+import numpy as np
 
 
-class ImageProcessor:
-    def __init__(self, data, to_tag=False, test=True):
-        if test:
-            with open('./cv/encode.txt', 'r') as f:
-                self.img = self._base64_to_img(f.read())
-        else:
-            self.img = self._base64_to_img(data)
+class CoinDetector:
+    def __init__(self, data, to_tag=False):
+        self.img = self._base64_to_img(data)
         self.to_tag = to_tag
 
     def _base64_to_img(self, data):
         img_binary = base64.b64decode(
             data.split(',')[-1]
-            # data.data.split(',')[-1]
         )
         img = cv2.imdecode(
             np.frombuffer(img_binary, dtype=np.uint8), 
             cv2.IMREAD_COLOR
         )
-
         return img
 
     def _img_to_base64(self, img):
-        cv2.imwrite("./cv/decoded.jpg", img)
         _, encoded = cv2.imencode(".jpg", img)
         img_base64 = base64.b64encode(encoded).decode("ascii")
 
