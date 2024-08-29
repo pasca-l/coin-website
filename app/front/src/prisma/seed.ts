@@ -1,32 +1,55 @@
+import axios from "axios";
 import { prisma } from "../lib/prisma";
-import COIN_DATA from "./coin_data.json";
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import COINDATA from "./coindata.json";
 
-// const data = COIN_DATA["coins"].map(({ year, ...other }) => ({
-//   year: +year,
-//   ...other,
-// }));
+type RawCoinData = {
+  name: string;
+  country: string;
+  year: string;
+  url: string;
+};
 
-// async function main() {
-//   await prisma.coin.createMany({
-//     data,
-//   });
-// }
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-const imageData = readFileSync(resolve(__dirname, "../public/github-mark.png"));
+async function fetchImage(url: string) {
+  try {
+    const res = await axios.get(url, {
+      responseType: "arraybuffer",
+    });
+    return Buffer.from(res.data, "base64");
+  } catch (error) {
+    console.error(`Error fetching ${url}: ${error}`);
+    return Buffer.from("");
+  }
+}
+
+async function processData(data: RawCoinData[]) {
+  const processed = await Promise.all(
+    data.map(async ({ year, url, ...other }) => ({
+      year: +year,
+      image: await fetchImage(url),
+      ...other,
+    }))
+  );
+  return processed;
+}
 
 async function main() {
-  await prisma.coin.createMany({
-    data: [
-      {
-        name: "test1",
-        country: "Japan",
-        year: 1000,
-        image: imageData,
-      },
-    ],
-  });
+  const data = COINDATA as RawCoinData[];
+
+  const batchSize = 5;
+  for (let i = 0; i < data.length; i += batchSize) {
+    const batch = data.slice(i, i + batchSize);
+
+    const processed = await processData(batch);
+    await prisma.coin.createMany({
+      data: processed,
+    });
+
+    await delay(2000);
+  }
 }
 
 main()
