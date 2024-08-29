@@ -44,7 +44,7 @@ services:
     tty: true
     networks:
       - appnetwork
-    command: sh -c "poetry run python server.py"
+    command: sh -c "poetry run python main.py"
 
 networks:
   appnetwork:
