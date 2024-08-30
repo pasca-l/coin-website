@@ -12,7 +12,6 @@ export default function Gallery() {
     <LinearProgress />
   ) : (
     coins?.map((coin) => {
-      console.log(coin.year, coin.image);
       return <CoinCard key={coin.uid} coin={coin} />;
     })
   );
